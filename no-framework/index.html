@@ -30,7 +30,7 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="container">
         <div class="navbar-brand">
-            <a class="navbar-item" href="https://bulma.io">
+            <a class="navbar-item" href="#">
                 <strong>To-Do List</strong>
             </a>
         </div>
@@ -39,19 +39,22 @@
 
 <div class="hero is-info">
     <div class="hero-body">
-        <div class="container">
+        <div class="container" id="app">
             <h1 class="title">
                 <i class="fa-solid fa-calendar"></i>
                 My To-Do List
             </h1>
 
-            <div class="field">
+            <div class="field has-addons">
+                <div class="control is-expanded">
+                    <input v-model="newTask" @keyup.enter="addTask" class="input" type="text" placeholder="Add a new task">
+                </div>
                 <div class="control">
-                    <input v-model="newTask" class="input" type="text" placeholder="Add a new task" @keyup.enter="addTask">
+                    <button class="button is-primary" @click="addTask">Add</button>
                 </div>
             </div>
 
-            <div class="section bg-white" id="app">
+            <div class="section bg-white">
                 <div class="todo-list">
                     <div class="todo-item" v-for="(task, index) in tasks" :key="index" :class="{ completed: task.completed }">
                         <span @click="toggleTask(index)">{{ task.text }}</span>
