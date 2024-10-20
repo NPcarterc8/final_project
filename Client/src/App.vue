@@ -7,6 +7,7 @@ import NavBar from './components/NavBar.vue'
   <header>
     <NavBar />
   </header>
+
   <div class="container">
     <RouterView />
   </div>
@@ -14,11 +15,12 @@ import NavBar from './components/NavBar.vue'
 
 <style scoped>
 body {
-  background-color: aqua;
+  background-color: aliceblue;
 }
+
 .container {
   background-color: white;
-  box-shadow: drop-shadow(0 0 0.5rem rgba(0, 0, 0, 0.8));
+  box-shadow: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
   min-height: 100vh;
 }
 </style>
