@@ -9,6 +9,8 @@ const isOpen = ref(false)
   <nav class="navbar is-info" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
+        <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="30" height="30" />
+
         <a
           role="button"
           class="navbar-burger"
@@ -27,6 +29,8 @@ const isOpen = ref(false)
       <div class="navbar-menu" :class="{ 'is-active': isOpen }">
         <div class="navbar-start">
           <RouterLink to="/Index" class="navbar-item">Home</RouterLink>
+          <RouterLink to="/products" class="navbar-item">Shop</RouterLink>
+
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link"> More </a>
 
