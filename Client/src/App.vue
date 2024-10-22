@@ -10,8 +10,6 @@ import NavBar from './components/NavBar.vue'
 
   <div class="container">
     <RouterView />
-    <h1>Home</h1>
-    <p>Welcome to your Vue.js app!</p>
   </div>
 </template>
 
