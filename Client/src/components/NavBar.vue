@@ -33,7 +33,7 @@ const isCartOpen = ref(false)
         <div class="navbar-start">
           <RouterLink to="/" class="navbar-item">Home</RouterLink>
           <RouterLink to="/products" class="navbar-item">Shop</RouterLink>
-
+          <RouterLink to="/user" class="navbar-item">user</RouterLink>
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link"> More </a>
 
