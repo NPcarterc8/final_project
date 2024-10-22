@@ -9,10 +9,13 @@ const { user } = props
 
 <template>
   <div class="box">
+    <div class="box-image">
+      <img :src="user.image" alt="product.name" />
+    </div>
     <div class="box-content">
-      <h3>{{ user.name }}</h3>
-      <i>{{ user.email }}</i>
-      <p>{{ user.role }}</p>
+      <h3>{{ user.firstName }} {{ user.lastName }}</h3>
+      <i>{{ user.age }}</i>
+      <p>{{ user.university }}</p>
     </div>
   </div>
 </template>

@@ -8,8 +8,9 @@ export function getAll(): DataListEnvelope<User> {
 
 export interface User {
   id: number
-  name: string
-  email: string
-  password: string
-  role: string
+  firstName: string
+  lastName: string
+  age: number
+  university: string
+  image: string
 }

@@ -30,7 +30,7 @@ const isCartOpen = ref(false)
       <div class="navbar-menu" :class="{ 'is-active': isOpen }">
         <div class="navbar-start">
           <RouterLink to="/" class="navbar-item">Home</RouterLink>
-          <RouterLink to="/user" class="navbar-item">user</RouterLink>
+          <RouterLink to="/user" class="navbar-item">Other Users</RouterLink>
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link"> More </a>
 
