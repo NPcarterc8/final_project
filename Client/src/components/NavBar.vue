@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import FlyoutPanel from './FlyoutPanel.vue'
+import ShoppingCart from './ShoppingCart.vue'
 
 const isOpen = ref(false)
+const isCartOpen = ref(false)
 </script>
 
 <template>
@@ -28,7 +31,7 @@ const isOpen = ref(false)
 
       <div class="navbar-menu" :class="{ 'is-active': isOpen }">
         <div class="navbar-start">
-          <RouterLink to="/Index" class="navbar-item">Home</RouterLink>
+          <RouterLink to="/" class="navbar-item">Home</RouterLink>
           <RouterLink to="/products" class="navbar-item">Shop</RouterLink>
 
           <div class="navbar-item has-dropdown is-hoverable">
@@ -51,12 +54,24 @@ const isOpen = ref(false)
                 <strong>Sign up</strong>
               </a>
               <a class="button is-light"> Log in </a>
+              <button
+                class="button is-warning is-light is-active"
+                :class="{ 'is-focused': isCartOpen }"
+                @click="isCartOpen = !isCartOpen"
+              >
+                <span class="icon">
+                  <i class="fas fa-shopping-cart"></i>
+                </span>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
   </nav>
+  <FlyoutPanel :is-open="isCartOpen">
+    <ShoppingCart />
+  </FlyoutPanel>
 </template>
 
 <style scoped>
