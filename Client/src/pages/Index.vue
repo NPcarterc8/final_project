@@ -1,8 +1,15 @@
-<script setup lang="ts"></script>
+<script setup></script>
 
 <template>
-  <main>
+  <div>
     <h1>Home</h1>
-    <p>Welcome to your Vue.js app!</p>
-  </main>
+  </div>
 </template>
+
+<style scoped>
+h1 {
+  font-size: 5em;
+  text-align: center;
+  color: #000;
+}
+</style>

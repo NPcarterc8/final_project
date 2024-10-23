@@ -29,8 +29,12 @@ const isCartOpen = ref(false)
 
       <div class="navbar-menu" :class="{ 'is-active': isOpen }">
         <div class="navbar-start">
-          <RouterLink to="/index" class="navbar-item">Home</RouterLink>
-          <RouterLink to="/user" class="navbar-item">Other Users</RouterLink>
+          <RouterLink to="/index" class="navbar-item"
+            ><i class="fa fa-home" aria-hidden="true"></i>Home</RouterLink
+          >
+          <RouterLink to="/user" class="navbar-item"
+            ><i class="fas fa-search"></i>Users Search</RouterLink
+          >
           <div class="navbar-item has-dropdown is-hoverable">
             <div class="navbar-dropdown">
               <hr class="navbar-divider" />
