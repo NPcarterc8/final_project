@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import LoginBadge from '@/components/LoginBadge.vue'
 
 const isOpen = ref(false)
 const isCartOpen = ref(false)
@@ -41,7 +42,6 @@ const isCartOpen = ref(false)
             </div>
           </div>
         </div>
-
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
@@ -53,6 +53,9 @@ const isCartOpen = ref(false)
           </div>
         </div>
       </div>
+    </div>
+    <div class="navbar-item">
+      <LoginBadge />
     </div>
   </nav>
 </template>
