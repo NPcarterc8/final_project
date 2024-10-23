@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { getAll, type User } from '@/models/user'
-import { refSession, login, logout } from '@/models/session'
+import { refSession, useLogin } from '@/models/session'
 
 const session = refSession()
 
 const users = getAll().data.slice(0, 5)
+
+const { login, logout } = useLogin()
 
 function doLogin(user: User) {
   login(user)
@@ -22,7 +24,7 @@ function doLogout() {
       {{ session.user.firstName }} {{ session.user.lastName }} <br />
       {{ session.user.email }}
     </div>
-    <div>( <a class="is-danger" @click="doLogout"> Not You? </a>)</div>
+    <div>( <a class="is-danger" @click.prevent="doLogout"> Not You? </a>)</div>
   </div>
   <div class="buttons" v-else>
     <a class="button is-primary">
