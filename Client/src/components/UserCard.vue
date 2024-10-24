@@ -1,19 +1,22 @@
-<script setup lang="ts">
-import { ref, computed } from 'vue'
+<script>
+import { computed } from 'vue'
 import { refSession } from '@/models/session'
-import type { User } from '@/models/user'
-import SearchBar from './SearchBar.vue'
-
-const props = defineProps<{
-  user: User
-}>()
-const { user } = props
 
 const session = refSession()
-const searchQuery = ref('')
-
 const isUser = computed(() => session.user?.role === 'user')
 const isAdmin = computed(() => session.user?.role === 'admin')
+
+export default {
+  props: {
+    user: Object
+  },
+  setup() {
+    return {
+      isUser,
+      isAdmin
+    }
+  }
+}
 </script>
 
 <template>
@@ -23,10 +26,47 @@ const isAdmin = computed(() => session.user?.role === 'admin')
         <img :src="user.image" alt="user.name" />
       </div>
       <div class="box-content">
-        <h3>{{ user.firstName + ' ' + user.lastName }}</h3>
-        <i>{{ user.age }}</i>
-        <p>{{ user.university }}</p>
+        <table>
+          <tr>
+            <td><strong>Name:</strong></td>
+            <td>{{ user.firstName + ' ' + user.lastName }}</td>
+          </tr>
+          <tr>
+            <td><strong>Age:</strong></td>
+            <td>{{ user.age }}</td>
+          </tr>
+          <tr>
+            <td><strong>University:</strong></td>
+            <td>{{ user.university }}</td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.box {
+  display: flex;
+  align-items: center;
+  margin-left: 2rem; /* Adjust the margin as needed to shift right */
+}
+
+.box-image {
+  margin-right: 1rem; /* Adjust the margin as needed */
+}
+
+.box-content table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.box-content td {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+}
+
+.box-content td strong {
+  font-weight: bold;
+}
+</style>
