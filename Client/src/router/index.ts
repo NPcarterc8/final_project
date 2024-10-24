@@ -9,7 +9,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const session = refSession()
-  if (!['/login', '/register'].includes(to.path) && !session.user) {
+  if (!['/login', '/Signup'].includes(to.path) && !session.user) {
     next('/login')
   } else {
     next()

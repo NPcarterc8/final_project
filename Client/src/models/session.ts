@@ -6,12 +6,24 @@ const session = reactive({
   user: null as User | null
 })
 
+export function useSignupForm() {
+  const router = useRouter()
+  return {
+    login(user: User) {
+      session.user = user
+    },
+    logout() {
+      session.user = null
+      router.push('/Signup')
+    }
+  }
+}
+
 export function useLogin() {
   const router = useRouter()
   return {
     login(user: User) {
       session.user = user
-      router.push('/products')
     },
     logout() {
       session.user = null

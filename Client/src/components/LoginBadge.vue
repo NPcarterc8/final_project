@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { getAll, type User } from '@/models/user'
 import { ref } from 'vue'
-import { refSession, useLogin } from '@/models/session'
+import { refSession, useLogin, useSignupForm } from '@/models/session'
 import { RouterLink } from 'vue-router'
 
 const session = refSession()
@@ -18,8 +18,9 @@ function doLogout() {
   logout()
 }
 
-function toggleLogo() {
+function toggleForm() {
   showForm.value = !showForm.value
+  useSignupForm()
 }
 </script>
 
@@ -33,7 +34,7 @@ function toggleLogo() {
     <div>( <a class="is-danger" @click.prevent="doLogout"> Not You? </a>)</div>
   </div>
   <div class="buttons" v-else>
-    <RouterLink to="/Signup" class="button is-primary" @click.native="toggleLogo">
+    <RouterLink to="/Signup" class="button is-primary" @click="toggleForm">
       <strong> Sign up</strong>
     </RouterLink>
     <div class="navbar-item has-dropdown is-hoverable">
@@ -46,7 +47,7 @@ function toggleLogo() {
     </div>
   </div>
   <div v-if="showForm">
-    <RouterLink to="/Signup" class="button is-primary" @click.native="toggleLogo">
+    <RouterLink to="/Signup" class="button is-primary" @click.="toggleForm">
       <strong> Sign up</strong>
     </RouterLink>
   </div>
