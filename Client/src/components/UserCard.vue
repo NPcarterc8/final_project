@@ -18,7 +18,6 @@ const isAdmin = computed(() => session.user?.role === 'admin')
 
 <template>
   <div>
-    <SearchBar v-if="isUser" v-model:searchQuery="searchQuery" />
     <div v-if="isAdmin" class="box">
       <div class="box-image">
         <img :src="user.image" alt="user.name" />
