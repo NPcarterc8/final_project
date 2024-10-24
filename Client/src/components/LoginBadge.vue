@@ -1,26 +1,21 @@
 <script setup lang="ts">
 import { getAll, type User } from '@/models/user'
 import { ref } from 'vue'
-import { refSession, useLogin, useSignupForm } from '@/models/session'
-import { RouterLink } from 'vue-router'
+import { refSession, useLogin } from '@/models/session'
+import { useRouter } from 'vue-router' // Import useRouter
 
 const session = refSession()
 const users = getAll().data.slice(0, 5)
 const { login, logout } = useLogin()
-
-const showForm = ref(false) // Reactive state for form visibility
+const router = useRouter() // Initialize router
 
 function doLogin(user: User) {
   login(user)
+  router.push('/index') // Redirect to user index page after login
 }
 
 function doLogout() {
   logout()
-}
-
-function toggleForm() {
-  showForm.value = !showForm.value
-  useSignupForm()
 }
 </script>
 
@@ -34,7 +29,7 @@ function toggleForm() {
     <div>( <a class="is-danger" @click.prevent="doLogout"> Not You? </a>)</div>
   </div>
   <div class="buttons" v-else>
-    <RouterLink to="/Signup" class="button is-primary" @click="toggleForm">
+    <RouterLink to="/Signup" class="button is-primary">
       <strong> Sign up</strong>
     </RouterLink>
     <div class="navbar-item has-dropdown is-hoverable">
@@ -45,10 +40,5 @@ function toggleForm() {
         </a>
       </div>
     </div>
-  </div>
-  <div v-if="showForm">
-    <RouterLink to="/Signup" class="button is-primary" @click.="toggleForm">
-      <strong> Sign up</strong>
-    </RouterLink>
   </div>
 </template>
