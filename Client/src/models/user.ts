@@ -15,4 +15,5 @@ export interface User {
   university: string
   image: string
   email: string
+  role: string
 }
