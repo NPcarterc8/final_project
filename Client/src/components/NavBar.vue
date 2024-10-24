@@ -4,7 +4,6 @@ import { RouterLink } from 'vue-router'
 import LoginBadge from '@/components/LoginBadge.vue'
 
 const isOpen = ref(false)
-const isCartOpen = ref(false)
 </script>
 
 <template>
@@ -12,7 +11,6 @@ const isCartOpen = ref(false)
     <div class="container">
       <div class="navbar-brand">
         <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="30" height="30" />
-
         <a
           role="button"
           class="navbar-burger"
@@ -27,7 +25,6 @@ const isCartOpen = ref(false)
           <span aria-hidden="true"></span>
         </a>
       </div>
-
       <div class="navbar-menu" :class="{ 'is-active': isOpen }">
         <div class="navbar-start">
           <RouterLink to="/index" class="navbar-item"
