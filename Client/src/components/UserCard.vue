@@ -1,10 +1,11 @@
 <script>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { refSession } from '@/models/session'
 
 const session = refSession()
 const isUser = computed(() => session.user?.role === 'user')
 const isAdmin = computed(() => session.user?.role === 'admin')
+const roles = ref(['user', 'admin', 'guest']) // Add more roles as needed
 
 export default {
   props: {
@@ -13,7 +14,8 @@ export default {
   setup() {
     return {
       isUser,
-      isAdmin
+      isAdmin,
+      roles
     }
   }
 }
@@ -40,6 +42,12 @@ export default {
             <td>{{ user.university }}</td>
           </tr>
         </table>
+        <div class="role-dropdown">
+          <label for="role"><strong>Role:</strong></label>
+          <select id="role" v-model="user.role">
+            <option v-for="role in roles" :key="role" :value="role">{{ role }}</option>
+          </select>
+        </div>
       </div>
     </div>
   </div>
@@ -56,6 +64,11 @@ export default {
   margin-right: 1rem; /* Adjust the margin as needed */
 }
 
+.box-content {
+  display: flex;
+  flex-direction: column;
+}
+
 .box-content table {
   border-collapse: collapse;
   width: 100%;
@@ -68,5 +81,15 @@ export default {
 
 .box-content td strong {
   font-weight: bold;
+}
+
+.role-dropdown {
+  margin-top: 1rem; /* Adjust the margin as needed */
+}
+
+.role-dropdown select {
+  padding: 0.25rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 </style>
