@@ -28,10 +28,16 @@ const isOpen = ref(false)
       <div class="navbar-menu" :class="{ 'is-active': isOpen }">
         <div class="navbar-start">
           <RouterLink to="/index" class="navbar-item"
-            ><i class="fa fa-home" aria-hidden="true"></i>Home</RouterLink
+            ><i class="fa fa-home" aria-hidden="true"></i>Profile</RouterLink
           >
           <RouterLink to="/user" class="navbar-item"
             ><i class="fas fa-search"></i>Users Search</RouterLink
+          >
+          <RouterLink to="/post" class="navbar-item"
+            ><i class="fa-solid fa-pen-to-square"></i>Post</RouterLink
+          >
+          <RouterLink to="/Statistics" class="navbar-item"
+            ><i class="fas fa-chart-line"></i>Statistics</RouterLink
           >
           <div class="navbar-item has-dropdown is-hoverable">
             <div class="navbar-dropdown">
