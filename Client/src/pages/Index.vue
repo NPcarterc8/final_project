@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { refSession, useLogin } from '@/models/session'
 
 const session = reactive(refSession())
@@ -7,6 +7,8 @@ const posts = ref([])
 const newPost = ref('')
 const workoutType = ref('')
 const location = ref('')
+//const isUser = computed(() => session.user?.role === 'user')
+const isAdmin = computed(() => session.user?.role === 'admin')
 
 const addPost = () => {
   if (newPost.value.trim() && workoutType.value.trim() && location.value.trim()) {
@@ -49,7 +51,7 @@ const deletePost = (postId) => {
         <p><strong>Workout Type:</strong> {{ post.workoutType }}</p>
         <p>{{ post.content }}</p>
         <button
-          v-if="session.user.isAdmin"
+          v-if="isAdmin"
           @click="deletePost(post.id)"
           class="delete-button"
           style="position: absolute; top: 10px; right: 10px"
