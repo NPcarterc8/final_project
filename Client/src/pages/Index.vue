@@ -1,8 +1,8 @@
 <script setup>
-import { ref } from 'vue'
-import { refSession } from '@/models/session'
+import { ref, reactive } from 'vue'
+import { refSession, useLogin } from '@/models/session'
 
-const session = refSession()
+const session = reactive(refSession())
 const posts = ref([])
 const newPost = ref('')
 const workoutType = ref('')
@@ -17,12 +17,17 @@ const addPost = () => {
       time: new Date().toLocaleTimeString(),
       location: location.value.trim(),
       workoutType: workoutType.value.trim(),
-      userImage: session.user?.image || '' // Get the current user's image from the session
+      userImage: session.user?.image || '', // Get the current user's image from the session
+      userId: session.user?.id || '' // Store the current user's ID
     })
     newPost.value = ''
     workoutType.value = ''
     location.value = ''
   }
+}
+
+const deletePost = (postId) => {
+  posts.value = posts.value.filter((post) => post.id !== postId)
 }
 </script>
 
@@ -43,6 +48,14 @@ const addPost = () => {
         <p><strong>Location:</strong> {{ post.location }}</p>
         <p><strong>Workout Type:</strong> {{ post.workoutType }}</p>
         <p>{{ post.content }}</p>
+        <button
+          v-if="session.user.isAdmin"
+          @click="deletePost(post.id)"
+          class="delete-button"
+          style="position: absolute; top: 10px; right: 10px"
+        >
+          Delete
+        </button>
       </div>
     </div>
   </div>
@@ -103,6 +116,7 @@ h1 {
 }
 
 .post-item {
+  position: relative;
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -114,5 +128,13 @@ h1 {
   height: 50px;
   border-radius: 50%;
   margin-bottom: 0.5rem;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 1.2em;
+  cursor: pointer;
 }
 </style>
