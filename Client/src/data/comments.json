@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "content": "Great workout session today!",
+    "date": "2023-10-01",
+    "time": "08:30 AM",
+    "location": "Gym",
+    "workoutType": "Cardio"
+  },
+  {
+    "id": 2,
+    "content": "Feeling strong after lifting weights.",
+    "date": "2023-10-02",
+    "time": "10:00 AM",
+    "location": "Fitness Center",
+    "workoutType": "Strength Training"
+  },
+  {
+    "id": 3,
+    "content": "Yoga session was relaxing.",
+    "date": "2023-10-03",
+    "time": "07:00 AM",
+    "location": "Yoga Studio",
+    "workoutType": "Yoga"
+  },
+  {
+    "id": 4,
+    "content": "Had a great run in the park.",
+    "date": "2023-10-04",
+    "time": "06:30 AM",
+    "location": "Central Park",
+    "workoutType": "Running"
+  },
+  {
+    "id": 5,
+    "content": "Swimming is the best way to start the day.",
+    "date": "2023-10-05",
+    "time": "09:00 AM",
+    "location": "Community Pool",
+    "workoutType": "Swimming"
+  },
+  {
+    "id": 6,
+    "content": "Cycling around the city was fun.",
+    "date": "2023-10-06",
+    "time": "05:00 PM",
+    "location": "City Center",
+    "workoutType": "Cycling"
+  },
+  {
+    "id": 7,
+    "content": "Boxing class was intense!",
+    "date": "2023-10-07",
+    "time": "06:00 PM",
+    "location": "Boxing Gym",
+    "workoutType": "Boxing"
+  },
+  {
+    "id": 8,
+    "content": "Pilates helped me stretch and relax.",
+    "date": "2023-10-08",
+    "time": "08:00 AM",
+    "location": "Pilates Studio",
+    "workoutType": "Pilates"
+  },
+  {
+    "id": 9,
+    "content": "Hiking in the mountains was refreshing.",
+    "date": "2023-10-09",
+    "time": "07:00 AM",
+    "location": "Mountain Trail",
+    "workoutType": "Hiking"
+  },
+  {
+    "id": 10,
+    "content": "CrossFit session pushed my limits.",
+    "date": "2023-10-10",
+    "time": "06:00 AM",
+    "location": "CrossFit Gym",
+    "workoutType": "CrossFit"
+  },
+  {
+    "id": 11,
+    "content": "Dancing is a great way to stay fit.",
+    "date": "2023-10-11",
+    "time": "07:30 PM",
+    "location": "Dance Studio",
+    "workoutType": "Dancing"
+  },
+  {
+    "id": 12,
+    "content": "Rock climbing was challenging but fun.",
+    "date": "2023-10-12",
+    "time": "04:00 PM",
+    "location": "Climbing Gym",
+    "workoutType": "Rock Climbing"
+  },
+  {
+    "id": 13,
+    "content": "Rowing in the lake was peaceful.",
+    "date": "2023-10-13",
+    "time": "09:00 AM",
+    "location": "Lake",
+    "workoutType": "Rowing"
+  },
+  {
+    "id": 14,
+    "content": "Martial arts training was intense.",
+    "date": "2023-10-14",
+    "time": "05:30 PM",
+    "location": "Martial Arts Dojo",
+    "workoutType": "Martial Arts"
+  },
+  {
+    "id": 15,
+    "content": "Tennis match was exciting.",
+    "date": "2023-10-15",
+    "time": "03:00 PM",
+    "location": "Tennis Court",
+    "workoutType": "Tennis"
+  },
+  {
+    "id": 16,
+    "content": "Golfing is a great way to relax.",
+    "date": "2023-10-16",
+    "time": "10:00 AM",
+    "location": "Golf Course",
+    "workoutType": "Golf"
+  },
+  {
+    "id": 17,
+    "content": "Basketball game was thrilling.",
+    "date": "2023-10-17",
+    "time": "06:00 PM",
+    "location": "Basketball Court",
+    "workoutType": "Basketball"
+  },
+  {
+    "id": 18,
+    "content": "Badminton is a fun way to stay active.",
+    "date": "2023-10-18",
+    "time": "05:00 PM",
+    "location": "Badminton Court",
+    "workoutType": "Badminton"
+  },
+  {
+    "id": 19,
+    "content": "Squash match was intense.",
+    "date": "2023-10-19",
+    "time": "07:00 PM",
+    "location": "Squash Court",
+    "workoutType": "Squash"
+  },
+  {
+    "id": 20,
+    "content": "Table tennis is a great workout.",
+    "date": "2023-10-20",
+    "time": "04:00 PM",
+    "location": "Table Tennis Hall",
+    "workoutType": "Table Tennis"
+  },
+  {
+    "id": 21,
+    "content": "Zumba class was energetic.",
+    "date": "2023-10-21",
+    "time": "06:30 PM",
+    "location": "Zumba Studio",
+    "workoutType": "Zumba"
+  },
+  {
+    "id": 22,
+    "content": "Horseback riding was a new experience.",
+    "date": "2023-10-22",
+    "time": "11:00 AM",
+    "location": "Ranch",
+    "workoutType": "Horseback Riding"
+  },
+  {
+    "id": 23,
+    "content": "Ice skating was fun and refreshing.",
+    "date": "2023-10-23",
+    "time": "02:00 PM",
+    "location": "Ice Rink",
+    "workoutType": "Ice Skating"
+  },
+  {
+    "id": 24,
+    "content": "Skiing in the mountains was exhilarating.",
+    "date": "2023-10-24",
+    "time": "09:00 AM",
+    "location": "Ski Resort",
+    "workoutType": "Skiing"
+  },
+  {
+    "id": 25,
+    "content": "Snowboarding was a thrilling experience.",
+    "date": "2023-10-25",
+    "time": "10:00 AM",
+    "location": "Snow Park",
+    "workoutType": "Snowboarding"
+  },
+  {
+    "id": 26,
+    "content": "Surfing at the beach was amazing.",
+    "date": "2023-10-26",
+    "time": "08:00 AM",
+    "location": "Beach",
+    "workoutType": "Surfing"
+  },
+  {
+    "id": 27,
+    "content": "Kayaking in the river was adventurous.",
+    "date": "2023-10-27",
+    "time": "07:00 AM",
+    "location": "River",
+    "workoutType": "Kayaking"
+  },
+  {
+    "id": 28,
+    "content": "Scuba diving was an unforgettable experience.",
+    "date": "2023-10-28",
+    "time": "09:00 AM",
+    "location": "Coral Reef",
+    "workoutType": "Scuba Diving"
+  },
+  {
+    "id": 29,
+    "content": "Paragliding was thrilling.",
+    "date": "2023-10-29",
+    "time": "10:00 AM",
+    "location": "Mountain Cliff",
+    "workoutType": "Paragliding"
+  },
+  {
+    "id": 30,
+    "content": "Skydiving was an adrenaline rush.",
+    "date": "2023-10-30",
+    "time": "11:00 AM",
+    "location": "Skydiving Center",
+    "workoutType": "Skydiving"
+  }
+]
