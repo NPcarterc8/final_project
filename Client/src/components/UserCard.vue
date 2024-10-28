@@ -11,8 +11,9 @@ export default {
   props: {
     user: Object
   },
-  setup() {
+  setup(props) {
     const isVisible = ref(true)
+    const localUser = ref({ ...props.user })
 
     const deletePost = (postId) => {
       console.log(`Deleting post with ID: ${postId}`)
@@ -24,6 +25,7 @@ export default {
       isAdmin,
       roles,
       isVisible,
+      localUser,
       deletePost
     }
   }
@@ -52,12 +54,10 @@ export default {
             <td>{{ user.university }}</td>
           </tr>
         </table>
-        <div class="role-dropdown">
-          <label for="role"><strong>Role:</strong></label>
-          <select id="role" v-model="user.role">
-            <option v-for="role in roles" :key="role" :value="role">{{ role }}</option>
-          </select>
-        </div>
+        <label for="role"><strong>Role:</strong></label>
+        <select id="role" v-model="localUser.role">
+          <option v-for="role in roles" :key="role" :value="role">{{ role }}</option>
+        </select>
       </div>
     </div>
   </div>
