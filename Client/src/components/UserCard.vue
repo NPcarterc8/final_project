@@ -1,7 +1,7 @@
 <script>
 import { computed, ref } from 'vue'
 import { refSession } from '@/models/session'
-
+//import { getAll } from '@/models/users'
 const session = refSession()
 const isUser = computed(() => session.user?.role === 'user')
 const isAdmin = computed(() => session.user?.role === 'admin')
@@ -12,10 +12,19 @@ export default {
     user: Object
   },
   setup() {
+    const isVisible = ref(true)
+
+    const deletePost = (postId) => {
+      console.log(`Deleting post with ID: ${postId}`)
+      isVisible.value = false
+    }
+
     return {
       isUser,
       isAdmin,
-      roles
+      roles,
+      isVisible,
+      deletePost
     }
   }
 }
@@ -23,11 +32,12 @@ export default {
 
 <template>
   <div>
-    <div v-if="isAdmin" class="box">
+    <div v-if="isAdmin && isVisible" class="box">
       <div class="box-image">
         <img :src="user.image" alt="user.name" />
       </div>
       <div class="box-content">
+        <button v-if="isAdmin" @click="deletePost(user.id)" class="delete-button">Delete</button>
         <table>
           <tr>
             <td><strong>Name:</strong></td>
@@ -91,5 +101,12 @@ export default {
   padding: 0.25rem;
   border: 1px solid #ddd;
   border-radius: 4px;
+}
+.delete-button {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 1.2em;
+  cursor: pointer;
 }
 </style>
