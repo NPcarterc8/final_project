@@ -1,45 +1,32 @@
-<script>
+<script setup lang="ts">
 import { computed, ref } from 'vue'
 import { refSession } from '@/models/session'
-//import { getAll } from '@/models/users'
+import { getAll, type User } from '@/models/user'
+
 const session = refSession()
 const isUser = computed(() => session.user?.role === 'user')
 const isAdmin = computed(() => session.user?.role === 'admin')
 const roles = ref(['user', 'admin', 'guest']) // Add more roles as needed
 
-export default {
-  props: {
-    user: Object
-  },
-  setup(props) {
-    const isVisible = ref(true)
-    const localUser = ref({ ...props.user })
-
-    const deletePost = (postId) => {
-      console.log(`Deleting post with ID: ${postId}`)
-      isVisible.value = false
-    }
-
-    return {
-      isUser,
-      isAdmin,
-      roles,
-      isVisible,
-      localUser,
-      deletePost
-    }
+defineProps<{
+  user: {
+    firstName: string
+    lastName: string
+    age: number
+    university: string
+    role: string
+    image: string
   }
-}
+}>()
 </script>
 
 <template>
   <div>
-    <div v-if="isAdmin && isVisible" class="box">
+    <div v-if="isAdmin" class="box">
       <div class="box-image">
         <img :src="user.image" alt="user.name" />
       </div>
       <div class="box-content">
-        <button v-if="isAdmin" @click="deletePost(user.id)" class="delete-button">Delete</button>
         <table>
           <tr>
             <td><strong>Name:</strong></td>
@@ -54,10 +41,12 @@ export default {
             <td>{{ user.university }}</td>
           </tr>
         </table>
-        <label for="role"><strong>Role:</strong></label>
-        <select id="role" v-model="localUser.role">
-          <option v-for="role in roles" :key="role" :value="role">{{ role }}</option>
-        </select>
+        <div class="role-dropdown">
+          <label for="role"><strong>Role:</strong></label>
+          <select id="role">
+            <option v-for="role in roles" :key="role" :value="role">{{ role }}</option>
+          </select>
+        </div>
       </div>
     </div>
   </div>
@@ -101,12 +90,5 @@ export default {
   padding: 0.25rem;
   border: 1px solid #ddd;
   border-radius: 4px;
-}
-.delete-button {
-  background: none;
-  border: none;
-  color: red;
-  font-size: 1.2em;
-  cursor: pointer;
 }
 </style>
