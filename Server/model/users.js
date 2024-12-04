@@ -1,6 +1,3 @@
-/*  B"H
- */
-
 /** @type {{ items: User[] }} */
 const data = require("../data/user.json");
 
