@@ -5,7 +5,11 @@ import { refSession, useLogin } from '@/models/session'
 import { useRouter } from 'vue-router' // Import useRouter
 
 const session = refSession()
-const users = getAll().data.slice(0, 5)
+const users = ref<User[]>([])
+
+getAll().then((response) => {
+  users.value = response.data.slice(0, 5)
+})
 const { login, logout } = useLogin()
 const router = useRouter() // Initialize router
 
