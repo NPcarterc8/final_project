@@ -1,19 +1,26 @@
-import data from '../data/user.json'
-import type { DataListEnvelope } from './dataEnvelope'
-export function getAll(): DataListEnvelope<User> {
-  return {
-    data: data.items,
-    total: data.items.length
+export class User {
+  id?: number
+  firstName: string = ''
+  lastName: string = ''
+  email: string = ''
+  phone: string = ''
+  password: string = ''
+  birthDate: string = ''
+  image: string = ''
+  address: {
+    address: string
+    city: string
+    state: string
+    stateCode: string
+    postalCode: string
+    country: string
+  } = {
+    address: '',
+    city: '',
+    state: '',
+    stateCode: '',
+    postalCode: '',
+    country: 'United States'
   }
-}
-
-export interface User {
-  id: number
-  firstName: string
-  lastName: string
-  age: number
-  university: string
-  image: string
-  email: string
-  role: string
+  role: string = 'admin'
 }
