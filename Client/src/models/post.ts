@@ -1,5 +1,5 @@
 import type { DataEnvelope, DataListEnvelope } from './dataEnvelope'
-import { api } from './myFetch.ts'
+import { api } from './myFetch'
 
 export async function getAll() {
   return api<DataListEnvelope<Post>>('post')

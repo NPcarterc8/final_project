@@ -1,22 +1,18 @@
 <script setup lang="ts" name="PostPage">
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { type User } from '@/models/user'
 import { refSession } from '@/models/session'
 import { getAll, getById } from '@/models/comments' // Assuming you have a fetchComments function
 import type { Comment } from '@/models/comments'
+const session = refSession()
 
-const user = ref<User | null>(null)
-const session = ref<Session | null>(null)
+const user = computed(() => session.user)
+
 const comments = ref<Comment[]>([])
 const isLoading = ref(true)
 const error = ref<string | null>(null)
 
-const sessionData = refSession()
 try {
-  const sessionData = await refSession()
-  session.value = sessionData
-  user.value = sessionData.user // Set user from session data
-
   comments.value = []
   if (user.value) {
     if (user.value && user.value.id !== undefined) {
