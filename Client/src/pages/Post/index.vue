@@ -1,9 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import postpage from '@/components/postpage.vue'
+</script>
 
 <template>
-  <div>
-    <h1>Hello, World!</h1>
+  <div class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <postpage />
+      </div>
+    </div>
   </div>
 </template>
-
-<style scoped></style>

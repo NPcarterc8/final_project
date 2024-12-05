@@ -64,7 +64,9 @@ watch(
           <img :src="user.image" alt="User Avatar" />
           {{ user.username }}
           <span style="flex-grow: 1; margin-left: 8px">{{ user.username }}</span>
-          <button @click="handleAddFriend(user)" class="add-friend-button">Add Friend</button>
+          <button @click="handleAddFriend(user)" class="add-friend-button" style="color: red">
+            Add Friend
+          </button>
         </li>
       </ul>
     </div>
