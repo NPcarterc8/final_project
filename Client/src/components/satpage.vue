@@ -1,33 +1,41 @@
 <script setup lang="ts" name="PostPage">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { type User } from '@/models/user'
 import { refSession } from '@/models/session'
-import { getAll, getById } from '@/models/comments' // Assuming you have a fetchComments function
+import { getById } from '@/models/comments'
 import type { Comment } from '@/models/comments'
+import { getAll as getAllWorkouts } from '@/models/workout'
+import type { Workout } from '@/models/workout'
 
 const user = ref<User | null>(null)
-const session = ref<Session | null>(null)
+const session = ref<any | null>(null)
 const comments = ref<Comment[]>([])
+const workouts = ref<Workout[]>([])
 const isLoading = ref(true)
 const error = ref<string | null>(null)
 
-const sessionData = refSession()
 try {
   const sessionData = await refSession()
   session.value = sessionData
-  user.value = sessionData.user // Set user from session data
+  user.value = sessionData.user
 
   comments.value = []
   if (user.value) {
-    if (user.value && user.value.id !== undefined) {
-      const commentsData = await getById(user.value.id) // Fetch comments for the user
+    if (user.value.id !== undefined) {
+      const commentsData = await getById(user.value.id)
       if (Array.isArray(commentsData.data)) {
-        comments.value = commentsData.data as Comment[] // Assuming commentsData has a 'data' property that contains the comments array
+        comments.value = commentsData.data as Comment[]
       } else {
         throw new Error('Invalid data format')
       }
     }
-    // comments.value = commentsData
+  }
+
+  const workoutsData = await getAllWorkouts()
+  if (Array.isArray(workoutsData.data)) {
+    workouts.value = workoutsData.data as Workout[]
+  } else {
+    throw new Error('Invalid data format')
   }
 } catch (err) {
   error.value = 'Failed to load data.'
@@ -63,6 +71,15 @@ try {
             <p>
               <strong>{{ user.username }}:</strong> {{ comment.content }}
             </p>
+          </li>
+        </ul>
+      </div>
+      <div class="profile-workouts">
+        <h2>Workouts</h2>
+        <ul>
+          <li v-for="workout in workouts" :key="workout.id">
+            <p>{{ workout.content }}</p>
+            <p>{{ workout.workoutType }}</p>
           </li>
         </ul>
       </div>
@@ -113,21 +130,25 @@ try {
   margin: 5px 0;
 }
 
-.profile-comments {
+.profile-comments,
+.profile-workouts {
   margin-top: 20px;
 }
 
-.profile-comments h2 {
+.profile-comments h2,
+.profile-workouts h2 {
   font-size: 20px;
   margin-bottom: 10px;
 }
 
-.profile-comments ul {
+.profile-comments ul,
+.profile-workouts ul {
   list-style-type: none;
   padding: 0;
 }
 
-.profile-comments li {
+.profile-comments li,
+.profile-workouts li {
   background: #f9f9f9;
   padding: 10px;
   border: 1px solid #ddd;

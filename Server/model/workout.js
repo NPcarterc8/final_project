@@ -1,5 +1,5 @@
 /** @type {{ items: { id: number; content: string; date: string; time: string; location: string; workoutType: string; userId: number; }[] }} */
-const data = require("../data/comments.json");
+const data = require("../data/workout.json");
 
 /**
  * @template T
@@ -8,12 +8,12 @@ const data = require("../data/comments.json");
  */
 
 /**
- * @typedef {import("../../Client/src/models/comments").Comment} Comment
+ * @typedef {import("../../Client/src/models/Workout").workout} workout
  */
 
 /**
- * Get all users
- * @returns {Promise<DataListEnvelope<Comment>>}
+ * Get all workouts
+ * @returns {Promise<DataListEnvelope<Workout>>}
  */
 async function getAll() {
   return {
@@ -24,12 +24,12 @@ async function getAll() {
 }
 
 /**
- * Get a user by id
+ * Get a workout by id
  * @param {number} id
- * @returns {Promise<DataEnvelope<Comment>>}
+ * @returns {Promise<DataEnvelope<Workout>>}
  */
 async function get(id) {
-  const item = data.items.find((comments) => comments.id == id);
+  const item = data.items.find((workout) => workout.id == id);
   return {
     isSuccess: !!item,
     data: item,
@@ -37,50 +37,50 @@ async function get(id) {
 }
 
 /**
- * Add a new user
- * @param {Comment} comments
- * @returns {Promise<DataEnvelope<Comment>>}
+ * Add a new workout
+ * @param {Workout} workout
+ * @returns {Promise<DataEnvelope<Workout>>}
  */
-async function add(comments) {
-  comments.id =
+async function add(workout) {
+  workout.id =
     data.items.reduce((prev, x) => (x.id > prev ? x.id : prev), 0) + 1;
   data.items.push({
-    id: comments.id,
-    content: comments.content,
-    date: comments.date.toISOString(),
-    time: comments.time.toISOString(),
-    location: comments.location,
-    workoutType: comments.workoutType,
-    userId: comments.userId,
+    id: workout.id,
+    content: workout.content,
+    date: workout.date.toISOString(),
+    time: workout.time.toISOString(),
+    location: workout.location,
+    workoutType: workout.workoutType,
+    userId: workout.userId,
   });
   return {
     isSuccess: true,
-    data: comments,
+    data: workout,
   };
 }
 
 /**
- * Update a user
+ * Update a workout
  * @param {number} id
- * @param {Comment} comments
- * @returns {Promise<DataEnvelope<Comment>>}
+ * @param {Workout} workout
+ * @returns {Promise<DataEnvelope<Workout>>}
  */
-async function update(id, comments) {
-  const commentsToUpdate = get(id);
-  Object.assign(commentsToUpdate, comments);
+async function update(id, workout) {
+  const workoutToUpdate = get(id);
+  Object.assign(workoutToUpdate, workout);
   return {
     isSuccess: true,
-    data: commentsToUpdate,
+    data: workoutToUpdate,
   };
 }
 
 /**
- * Remove a user
+ * Remove a workout
  * @param {number} id
  * @returns {Promise<DataEnvelope<number>>}
  */
 async function remove(id) {
-  const itemIndex = data.items.findIndex((comments) => comments.id == id);
+  const itemIndex = data.items.findIndex((workout) => workout.id == id);
   if (itemIndex === -1)
     throw {
       isSuccess: false,

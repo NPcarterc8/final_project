@@ -22,7 +22,7 @@ export function remove(id: number) {
 }
 
 export type Comment = {
-  id: number
+  id?: number
   content: string
   date: Date
   time: Date

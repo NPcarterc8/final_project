@@ -1,9 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import satpage from '@/components/satpage.vue'
+</script>
 
 <template>
-  <div>
-    <h1>Hello, World!</h1>
+  <div class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <satpage />
+      </div>
+    </div>
   </div>
 </template>
-
-<style scoped></style>

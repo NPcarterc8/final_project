@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const userController = require("./controllers/users");
-
+const commentController = require("./controllers/comments");
 const PORT = 3000;
 
 // Middleware
@@ -24,6 +24,7 @@ app
     res.send("About Us");
   })
   .use("/api/v1/users", userController)
+  .use("/api/v1/comment", commentController)
 
   .get("*", (req, res, next) => {
     res.sendFile(__dirname + "/dist/index.html");
