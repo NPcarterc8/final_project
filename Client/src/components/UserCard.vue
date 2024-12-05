@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { getAll, type User } from '@/models/user'
 import { computed, ref } from 'vue'
 import { refSession } from '@/models/session'
-import { getAll, type User } from '@/models/user'
 
 const session = refSession()
 const isUser = computed(() => session.user?.role === 'user')

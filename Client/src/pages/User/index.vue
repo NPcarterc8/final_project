@@ -10,7 +10,9 @@ const session = refSession()
 const isUser = computed(() => session.user?.role === 'user')
 const searchQuery = ref('')
 
-user.value = getAll().data
+getAll().then((response) => {
+  user.value = response.data
+})
 </script>
 
 <template>

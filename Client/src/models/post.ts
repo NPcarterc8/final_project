@@ -1,29 +1,24 @@
-import data from '../data/comments.json'
-import type { DataListEnvelope } from './dataEnvelope'
+import type { DataEnvelope, DataListEnvelope } from './dataEnvelope'
+import { api } from './myFetch.ts'
 
-const LOCAL_STORAGE_KEY = 'posts'
-
-function loadPostsFromLocalStorage(): Post[] {
-  const savedPosts = localStorage.getItem(LOCAL_STORAGE_KEY)
-  return savedPosts ? JSON.parse(savedPosts) : data.items
+export async function getAll() {
+  return api<DataListEnvelope<Post>>('post')
 }
 
-function savePostsToLocalStorage(posts: Post[]): void {
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(posts))
+export async function getById(id: number) {
+  return api<DataEnvelope<Post>>(`post/${id}`)
 }
 
-export function getAll(): DataListEnvelope<Post> {
-  const posts = loadPostsFromLocalStorage()
-  return {
-    data: posts,
-    total: posts.length
-  }
+export function create(post: Post) {
+  return api<DataEnvelope<Post>>('post', post)
 }
 
-export function addPost(post: Post): void {
-  const posts = loadPostsFromLocalStorage()
-  posts.push(post)
-  savePostsToLocalStorage(posts)
+export function update(user: Post) {
+  return api<DataEnvelope<Post>>(`post/${user.id}`, user, 'PATCH')
+}
+
+export function remove(id: number) {
+  return api<DataEnvelope<Post>>(`post/${id}`, undefined, 'DELETE')
 }
 
 export interface Post {

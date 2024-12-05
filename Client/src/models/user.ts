@@ -20,29 +20,40 @@ export function update(user: User) {
 export function remove(id: number) {
   return api<DataEnvelope<User>>(`users/${id}`, undefined, 'DELETE')
 }
-export class User {
+export type User = {
   id?: number
-  firstName: string = ''
-  lastName: string = ''
-  email: string = ''
-  phone: string = ''
-  password: string = ''
-  birthDate: string = ''
-  image: string = ''
+
+  firstName: string
+
+  lastName: string
+
+  email: string
+
+  phone: string
+
+  password: string
+
+  birthDate: string
+
+  image: string
+
   address: {
     address: string
+
     city: string
+
     state: string
+
     stateCode: string
+
     postalCode: string
+
     country: string
-  } = {
-    address: '',
-    city: '',
-    state: '',
-    stateCode: '',
-    postalCode: '',
-    country: 'United States'
   }
-  role: string = 'admin'
+
+  role: string
+
+  age: number
+
+  university: string
 }
