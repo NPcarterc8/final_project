@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "nodemon server/index.js --watch server"
+    "start": "node Server/index.js",
+    "dev": "nodemon Server/index.js --watch server"
   },
   "dependencies": {
     "express": "^4.21.0",
