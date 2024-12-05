@@ -8,12 +8,12 @@ const data = require("../data/comments.json");
  */
 
 /**
- * @typedef {import("../../Client/src/models/user").User} User
+ * @typedef {import("../../Client/src/models/comments").Comment} Comment
  */
 
 /**
  * Get all users
- * @returns {Promise<DataListEnvelope<User>>}
+ * @returns {Promise<DataListEnvelope<Comment>>}
  */
 async function getAll() {
   return {
@@ -26,10 +26,10 @@ async function getAll() {
 /**
  * Get a user by id
  * @param {number} id
- * @returns {Promise<DataEnvelope<User>>}
+ * @returns {Promise<DataEnvelope<Comment>>}
  */
 async function get(id) {
-  const item = data.items.find((user) => user.id == id);
+  const item = data.items.find((comments) => comments.id == id);
   return {
     isSuccess: !!item,
     data: item,
@@ -38,30 +38,35 @@ async function get(id) {
 
 /**
  * Add a new user
- * @param {User} user
- * @returns {Promise<DataEnvelope<User>>}
+ * @param {Comment} comments
+ * @returns {Promise<DataEnvelope<Comment>>}
  */
-async function add(user) {
-  user.id = data.items.reduce((prev, x) => (x.id > prev ? x.id : prev), 0) + 1;
-  data.items.push(user);
+async function add(comments) {
+  comments.id =
+    data.items.reduce((prev, x) => (x.id > prev ? x.id : prev), 0) + 1;
+  data.items.push({
+    ...comments,
+    date: comments.date.toISOString(),
+    time: comments.time.toISOString(),
+  });
   return {
     isSuccess: true,
-    data: user,
+    data: comments,
   };
 }
 
 /**
  * Update a user
  * @param {number} id
- * @param {User} user
- * @returns {Promise<DataEnvelope<User>>}
+ * @param {Comment} comments
+ * @returns {Promise<DataEnvelope<Comment>>}
  */
-async function update(id, user) {
-  const userToUpdate = get(id);
-  Object.assign(userToUpdate, user);
+async function update(id, comments) {
+  const commentsToUpdate = get(id);
+  Object.assign(commentsToUpdate, comments);
   return {
     isSuccess: true,
-    data: userToUpdate,
+    data: commentsToUpdate,
   };
 }
 
@@ -71,7 +76,7 @@ async function update(id, user) {
  * @returns {Promise<DataEnvelope<number>>}
  */
 async function remove(id) {
-  const itemIndex = data.items.findIndex((user) => user.id == id);
+  const itemIndex = data.items.findIndex((comments) => comments.id == id);
   if (itemIndex === -1)
     throw {
       isSuccess: false,
