@@ -1,6 +1,5 @@
-<script setup lang="ts" name="PostPage">
+<script setup lang="ts" name="PostPageComponent">
 import { ref, computed, onMounted } from 'vue'
-import { type User } from '@/models/user'
 import { refSession } from '@/models/session'
 import { getById } from '@/models/comments' // Assuming you have a fetchComments function
 import type { Comment } from '@/models/comments'
@@ -24,7 +23,7 @@ onMounted(() => {
             throw new Error('Invalid data format')
           }
         })
-        .catch((err) => {
+        .catch(() => {
           error.value = 'Failed to load data.'
         })
         .finally(() => {
