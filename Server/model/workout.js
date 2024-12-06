@@ -1,36 +1,35 @@
-/** @type {{ items: { id: number; content: string; date: string; time: string; location: string; workoutType: string; userId: number; }[] }} */
-import data from "../data/workout.json";
-// Removed unused variable workoutData
+/** @type {{ items: Workout[] }} */
+const data = require("../data/workout.json");
 
 /**
  * @template T
  * @typedef {import("../../Client/src/models/dataEnvelope").DataEnvelope} DataEnvelope
  * @typedef {import("../../Client/src/models/dataEnvelope").DataListEnvelope} DataListEnvelope
- * @typedef {import("../../Client/src/models/workout").Workout & { time: string; location: string; workoutType: string; duration: string }} Workout
+ */
 
 /**
- * @typedef {import("../../Client/src/models/workout").Workout & { location: string }} workout
+ * @typedef {import("../../Client/src/models/workout").Workout} Workout
  */
 
 /**
  * Get all workouts
- * @returns {Promise<DataListEnvelope<Workout<any>>>}
+ * @returns {Promise<DataListEnvelope<Workout>>}
  */
 async function getAll() {
   return {
     isSuccess: true,
-    data: data,
-    total: data.length,
+    data: data.items,
+    total: data.items.length,
   };
 }
 
 /**
  * Get a workout by id
  * @param {number} id
- * @returns {Promise<DataEnvelope<Workout<any>>>}
+ * @returns {Promise<DataEnvelope<Workout>>}
  */
 async function get(id) {
-  const item = data.find((workout) => workout.id == id);
+  const item = data.items.find((workout) => workout.id == id);
   return {
     isSuccess: !!item,
     data: item,
@@ -39,18 +38,13 @@ async function get(id) {
 
 /**
  * Add a new workout
- * @param {Workout<any>} workout
- * @returns {Promise<DataEnvelope<Workout<any>>>}
+ * @param {Workout} workout
+ * @returns {Promise<DataEnvelope<Workout>>}
  */
 async function add(workout) {
-  workout.id = data.reduce((prev, x) => (x.id > prev ? x.id : prev), 0) + 1;
-  data.push({
-    id: workout.id,
-    date: workout.date.toString(),
-    type: workout.workoutType,
-    duration: workout.duration,
-    userId: workout.userId,
-  });
+  workout.id =
+    data.items.reduce((prev, x) => (x.id > prev ? x.id : prev), 0) + 1;
+  data.items.push(workout);
   return {
     isSuccess: true,
     data: workout,
@@ -60,8 +54,8 @@ async function add(workout) {
 /**
  * Update a workout
  * @param {number} id
- * @param {Workout<any>} workout
- * @param {Workout<any>} workout
+ * @param {Workout} workout
+ * @returns {Promise<DataEnvelope<Workout>>}
  */
 async function update(id, workout) {
   const workoutToUpdate = get(id);
@@ -78,7 +72,7 @@ async function update(id, workout) {
  * @returns {Promise<DataEnvelope<number>>}
  */
 async function remove(id) {
-  const itemIndex = data.findIndex((workout) => workout.id == id);
+  const itemIndex = data.items.findIndex((workout) => workout.id == id);
   if (itemIndex === -1)
     throw {
       isSuccess: false,
@@ -86,7 +80,7 @@ async function remove(id) {
       data: id,
       status: 404,
     };
-  data.splice(itemIndex, 1);
+  data.items.splice(itemIndex, 1);
   return { isSuccess: true, message: "Item deleted", data: id };
 }
 
