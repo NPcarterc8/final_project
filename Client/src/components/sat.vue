@@ -1,4 +1,4 @@
-<script setup lang="ts" name="PostPage">
+<script setup lang="ts" name="UserProfilePage">
 import { ref } from 'vue'
 import { type User } from '@/models/user'
 import { refSession } from '@/models/session'
@@ -15,7 +15,7 @@ const isLoading = ref(true)
 const error = ref<string | null>(null)
 
 try {
-  const sessionData = await refSession()
+  const sessionData = refSession()
   session.value = sessionData
   user.value = sessionData.user
 
@@ -78,8 +78,8 @@ try {
         <h2>Workouts</h2>
         <ul>
           <li v-for="workout in workouts" :key="workout.id">
-            <p>{{ workout.content }}</p>
-            <p>{{ workout.workoutType }}</p>
+            <p>{{ workout.type }}</p>
+            <p>{{ workout.duration }}</p>
           </li>
         </ul>
       </div>
