@@ -1,4 +1,4 @@
-<script setup lang="ts" name="UserProfilePage">
+<script setup lang="ts" name="UserProfile">
 import { ref } from 'vue'
 import { type User } from '@/models/user'
 import { refSession } from '@/models/session'
@@ -14,34 +14,41 @@ const workouts = ref<Workout[]>([])
 const isLoading = ref(true)
 const error = ref<string | null>(null)
 
-try {
-  const sessionData = refSession()
-  session.value = sessionData
-  user.value = sessionData.user
+const sessionData = refSession()
+session.value = sessionData
+user.value = sessionData.user
 
-  comments.value = []
-  if (user.value) {
-    if (user.value.id !== undefined) {
-      const commentsData = await getById(user.value.id)
-      if (Array.isArray(commentsData.data)) {
-        comments.value = commentsData.data as Comment[]
-      } else {
-        throw new Error('Invalid data format')
-      }
-    }
+comments.value = []
+if (user.value) {
+  if (user.value.id !== undefined) {
+    getById(user.value.id)
+      .then((commentsData) => {
+        if (Array.isArray(commentsData.data)) {
+          comments.value = commentsData.data as Comment[]
+        } else {
+          throw new Error('Invalid data format')
+        }
+      })
+      .catch(() => {
+        error.value = 'Failed to load comments.'
+      })
   }
-
-  const workoutsData = await getAllWorkouts()
-  if (Array.isArray(workoutsData.data)) {
-    workouts.value = workoutsData.data as Workout[]
-  } else {
-    throw new Error('Invalid data format')
-  }
-} catch (err) {
-  error.value = 'Failed to load data.'
-} finally {
-  isLoading.value = false
 }
+
+getAllWorkouts()
+  .then((workoutsData) => {
+    if (Array.isArray(workoutsData.data)) {
+      workouts.value = workoutsData.data as Workout[]
+    } else {
+      throw new Error('Invalid data format')
+    }
+  })
+  .catch(() => {
+    error.value = 'Failed to load workouts.'
+  })
+  .finally(() => {
+    isLoading.value = false
+  })
 </script>
 
 <template>
