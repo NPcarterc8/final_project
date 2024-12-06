@@ -17,12 +17,17 @@ function updateQuery(event: Event) {
 }
 
 async function fetchResults(query: string) {
-  if (query.length > 2) {
+  if (query.length > 0) {
     try {
       const response = await getAll()
       const users: User[] = response.data
-      results.value = users.filter((user) =>
-        user.username.toLowerCase().includes(query.toLowerCase())
+      const lowerCaseQuery = query.toLowerCase()
+      results.value = users.filter(
+        (user) =>
+          user.username.toLowerCase().includes(lowerCaseQuery) ||
+          user.firstName.toLowerCase().includes(lowerCaseQuery) ||
+          user.lastName.toLowerCase().includes(lowerCaseQuery) ||
+          user.email.toLowerCase().includes(lowerCaseQuery)
       )
     } catch (error) {
       console.error('Error fetching search results:', error)
