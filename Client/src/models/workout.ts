@@ -21,12 +21,13 @@ export function remove(id: number) {
   return api<DataEnvelope<Workout>>(`workouts/${id}`, undefined, 'DELETE')
 }
 
-export type Workout = {
-  id?: number
-  content: string
-  date: Date
-  time: Date
-  location: string
-  workoutType: string
+export interface Workout {
+  id: number
+
+  type: string
+
+  duration: string
+
+  date: string
   userId: number
 }

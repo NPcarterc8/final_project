@@ -22,17 +22,12 @@ export function remove(id: number) {
 }
 
 export interface Post {
-  id: number
-
+  id?: number
   content: string
-
-  date: string
-
-  time: string
-
+  date: Date
+  time: Date
   location: string
-
+  workoutType: string
   userId: number
-
   postType?: string
 }
