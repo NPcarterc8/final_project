@@ -1,5 +1,5 @@
-/** @type {{ items: { id: number; content: string; date: string; time: string; location: string; workoutType: string; userId: number; }[] }} */
-const data = require("../data/workout.json");
+/** @type {{ items: { id: number; type: string; duration: string; date: string; userId: number; }[] }} */
+import data from "../data/workout.json";
 
 /**
  * @template T
@@ -8,28 +8,28 @@ const data = require("../data/workout.json");
  */
 
 /**
- * @typedef {import("../../Client/src/models/Workout").workout} workout
+ * @typedef {import("../../Client/src/models/post").Post & { postType?: string, type?: string, duration?: string }} Post
  */
 
 /**
- * Get all workouts
- * @returns {Promise<DataListEnvelope<Workout>>}
+ * Get all posts
+ * @returns {Promise<DataListEnvelope<Post>>}
  */
 async function getAll() {
   return {
     isSuccess: true,
-    data: data.items,
-    total: data.items.length,
+    data: data,
+    total: data.length,
   };
 }
 
 /**
- * Get a workout by id
+ * Get a post by id
  * @param {number} id
- * @returns {Promise<DataEnvelope<Workout>>}
+ * @returns {Promise<DataEnvelope<Post>>}
  */
 async function get(id) {
-  const item = data.items.find((workout) => workout.id == id);
+  const item = data.find((post) => post.id == id);
   return {
     isSuccess: !!item,
     data: item,
@@ -37,50 +37,47 @@ async function get(id) {
 }
 
 /**
- * Add a new workout
- * @param {Workout} workout
- * @returns {Promise<DataEnvelope<Workout>>}
+ * Add a new post
+ * @param {Post} post
+ * @returns {Promise<DataEnvelope<Post>>}
  */
-async function add(workout) {
-  workout.id =
-    data.items.reduce((prev, x) => (x.id > prev ? x.id : prev), 0) + 1;
-  data.items.push({
-    id: workout.id,
-    content: workout.content,
-    date: workout.date.toISOString(),
-    time: workout.time.toISOString(),
-    location: workout.location,
-    workoutType: workout.workoutType,
-    userId: workout.userId,
+async function add(post) {
+  post.id = data.reduce((prev, x) => (x.id > prev ? x.id : prev), 0) + 1;
+  data.push({
+    id: post.id,
+    type: post.type || "defaultType",
+    duration: post.duration || "defaultDuration",
+    date: new Date(post.date).toISOString(),
+    userId: post.userId || 0,
   });
   return {
     isSuccess: true,
-    data: workout,
+    data: post,
   };
 }
 
 /**
- * Update a workout
+ * Update a post
  * @param {number} id
- * @param {Workout} workout
- * @returns {Promise<DataEnvelope<Workout>>}
+ * @param {Post} post
+ * @returns {Promise<DataEnvelope<Post>>}
  */
-async function update(id, workout) {
-  const workoutToUpdate = get(id);
-  Object.assign(workoutToUpdate, workout);
+async function update(id, post) {
+  const { data: postToUpdate } = await get(id);
+  Object.assign(postToUpdate, post);
   return {
     isSuccess: true,
-    data: workoutToUpdate,
+    data: postToUpdate,
   };
 }
 
 /**
- * Remove a workout
+ * Remove a post
  * @param {number} id
  * @returns {Promise<DataEnvelope<number>>}
  */
 async function remove(id) {
-  const itemIndex = data.items.findIndex((workout) => workout.id == id);
+  const itemIndex = data.findIndex((post) => post.id == id);
   if (itemIndex === -1)
     throw {
       isSuccess: false,
@@ -88,7 +85,7 @@ async function remove(id) {
       data: id,
       status: 404,
     };
-  data.items.splice(itemIndex, 1);
+  data.splice(itemIndex, 1);
   return { isSuccess: true, message: "Item deleted", data: id };
 }
 

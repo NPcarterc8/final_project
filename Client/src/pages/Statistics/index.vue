@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import satpage from '@/components/satpage.vue'
+import sat from '@/components/sat.vue'
 </script>
 
 <template>
   <div class="hero">
     <div class="hero-body">
       <div class="container">
-        <satpage />
+        <sat />
       </div>
     </div>
   </div>

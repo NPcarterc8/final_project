@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import postpage from '@/components/postpage.vue'
+import post from '@/components/post.vue'
 </script>
 
 <template>
   <div class="hero">
     <div class="hero-body">
       <div class="container">
-        <postpage />
+        <post />
       </div>
     </div>
   </div>

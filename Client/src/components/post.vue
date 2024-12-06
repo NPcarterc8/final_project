@@ -2,7 +2,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { type User } from '@/models/user'
 import { refSession } from '@/models/session'
-import { getAll, getById } from '@/models/comments' // Assuming you have a fetchComments function
+import { getById } from '@/models/comments' // Assuming you have a fetchComments function
 import type { Comment } from '@/models/comments'
 const session = refSession()
 
@@ -12,24 +12,27 @@ const comments = ref<Comment[]>([])
 const isLoading = ref(true)
 const error = ref<string | null>(null)
 
-try {
+onMounted(() => {
   comments.value = []
   if (user.value) {
     if (user.value && user.value.id !== undefined) {
-      const commentsData = await getById(user.value.id) // Fetch comments for the user
-      if (Array.isArray(commentsData.data)) {
-        comments.value = commentsData.data as Comment[] // Assuming commentsData has a 'data' property that contains the comments array
-      } else {
-        throw new Error('Invalid data format')
-      }
+      getById(user.value.id)
+        .then((commentsData) => {
+          if (Array.isArray(commentsData.data)) {
+            comments.value = commentsData.data as Comment[] // Assuming commentsData has a 'data' property that contains the comments array
+          } else {
+            throw new Error('Invalid data format')
+          }
+        })
+        .catch((err) => {
+          error.value = 'Failed to load data.'
+        })
+        .finally(() => {
+          isLoading.value = false
+        })
     }
-    // comments.value = commentsData
   }
-} catch (err) {
-  error.value = 'Failed to load data.'
-} finally {
-  isLoading.value = false
-}
+})
 </script>
 
 <template>
