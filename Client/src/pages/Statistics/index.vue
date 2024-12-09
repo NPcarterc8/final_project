@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import sat from '@/components/sat.vue'
+import sat from '@/components/Sat.vue'
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const userController = require("./controllers/users");
-const commentController = require("./controllers/comments");
+const commentController = require("./controllers/post");
 const workoutController = require("./controllers/workout");
 const PORT = 3000;
 
@@ -25,7 +25,7 @@ app
     res.send("About Us");
   })
   .use("/api/v1/users", userController)
-  .use("/api/v1/comment", commentController)
+  .use("/api/v1/post", commentController)
   .use("/api/v1/workout", workoutController)
 
   .get("*", (req, res, next) => {

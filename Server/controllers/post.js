@@ -1,4 +1,4 @@
-const model = require("../model/comment");
+const model = require("../model/post");
 const express = require("express");
 const app = express.Router();
 

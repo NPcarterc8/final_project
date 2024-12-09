@@ -24,8 +24,8 @@ export function remove(id: number) {
 export interface Post {
   id?: number
   content: string
-  date: Date
-  time: Date
+  date: string
+  time: string
   location: string
   workoutType: string
   userId: number
