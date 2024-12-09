@@ -1,4 +1,10 @@
-export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
 
 export type Database = {
   graphql_public: {
@@ -30,98 +36,130 @@ export type Database = {
     Tables: {
       post: {
         Row: {
-          id: number
-          title: string
-          content: string
-          createdAt: string | null
-          updatedAt: string | null
-          userId: number
+          content: string | null
+          date: string | null
+          id: number | null
+          location: string | null
+          time: string | null
+          userId: number | null
+          workoutType: string | null
         }
         Insert: {
-          id?: number
-          title: string
-          content: string
-          createdAt?: string | null
-          updatedAt?: string | null
-          userId: number
+          content?: string | null
+          date?: string | null
+          id?: number | null
+          location?: string | null
+          time?: string | null
+          userId?: number | null
+          workoutType?: string | null
         }
         Update: {
-          id?: number
-          title?: string
-          content?: string
-          createdAt?: string | null
-          updatedAt?: string | null
-          userId?: number
+          content?: string | null
+          date?: string | null
+          id?: number | null
+          location?: string | null
+          time?: string | null
+          userId?: number | null
+          workoutType?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: 'posts_userId_fkey'
-            columns: ['userId']
-            isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          }
-        ]
+        Relationships: []
+      }
+      user: {
+        Row: {
+          age: number | null
+          birth_date: string | null
+          blood_group: string | null
+          email: string | null
+          eye_color: string | null
+          first_name: string | null
+          gender: string | null
+          hair_color: string | null
+          hair_type: string | null
+          height: number | null
+          id: number
+          image: string | null
+          ip: string | null
+          last_name: string | null
+          mac_address: string | null
+          maiden_name: string | null
+          password: string | null
+          phone: string | null
+          role: string | null
+          university: string | null
+          username: string | null
+          weight: number | null
+        }
+        Insert: {
+          age?: number | null
+          birth_date?: string | null
+          blood_group?: string | null
+          email?: string | null
+          eye_color?: string | null
+          first_name?: string | null
+          gender?: string | null
+          hair_color?: string | null
+          hair_type?: string | null
+          height?: number | null
+          id?: number
+          image?: string | null
+          ip?: string | null
+          last_name?: string | null
+          mac_address?: string | null
+          maiden_name?: string | null
+          password?: string | null
+          phone?: string | null
+          role?: string | null
+          university?: string | null
+          username?: string | null
+          weight?: number | null
+        }
+        Update: {
+          age?: number | null
+          birth_date?: string | null
+          blood_group?: string | null
+          email?: string | null
+          eye_color?: string | null
+          first_name?: string | null
+          gender?: string | null
+          hair_color?: string | null
+          hair_type?: string | null
+          height?: number | null
+          id?: number
+          image?: string | null
+          ip?: string | null
+          last_name?: string | null
+          mac_address?: string | null
+          maiden_name?: string | null
+          password?: string | null
+          phone?: string | null
+          role?: string | null
+          university?: string | null
+          username?: string | null
+          weight?: number | null
+        }
+        Relationships: []
       }
       workout: {
         Row: {
-          id: number
-          name: string
-          duration: number
-          intensity: string
-          createdAt: string | null
-          updatedAt: string | null
-          userId: number
+          date: string | null
+          duration: string | null
+          id: number | null
+          type: string | null
+          userId: number | null
         }
         Insert: {
-          id?: number
-          name: string
-          duration: number
-          intensity: string
-          createdAt?: string | null
-          updatedAt?: string | null
-          userId: number
+          date?: string | null
+          duration?: string | null
+          id?: number | null
+          type?: string | null
+          userId?: number | null
         }
         Update: {
-          id?: number
-          name?: string
-          duration?: number
-          intensity?: string
-          createdAt?: string | null
-          updatedAt?: string | null
-          userId?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: 'workouts_userId_fkey'
-            columns: ['userId']
-            isOneToOne: false
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          }
-        ]
-      }
-      users: {
-        Row: {
-          id: number
-          name: string
-          email: string
-          createdAt: string | null
-          updatedAt: string | null
-        }
-        Insert: {
-          id?: number
-          name: string
-          email: string
-          createdAt?: string | null
-          updatedAt?: string | null
-        }
-        Update: {
-          id?: number
-          name?: string
-          email?: string
-          createdAt?: string | null
-          updatedAt?: string | null
+          date?: string | null
+          duration?: string | null
+          id?: number | null
+          type?: string | null
+          userId?: number | null
         }
         Relationships: []
       }
@@ -141,25 +179,27 @@ export type Database = {
   }
 }
 
-type PublicSchema = Database[Extract<keyof Database, 'public'>]
+type PublicSchema = Database[Extract<keyof Database, "public">]
 
 export type Tables<
   PublicTableNameOrOptions extends
-    | keyof (PublicSchema['Tables'] & PublicSchema['Views'])
+    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
-        Database[PublicTableNameOrOptions['schema']]['Views'])
-    : never = never
+    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+        Database[PublicTableNameOrOptions["schema"]]["Views"])
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
-      Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
+  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
+      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
       Row: infer R
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] & PublicSchema['Views'])
-    ? (PublicSchema['Tables'] & PublicSchema['Views'])[PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
+        PublicSchema["Views"])
+    ? (PublicSchema["Tables"] &
+        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
         Row: infer R
       }
       ? R
@@ -167,18 +207,20 @@ export type Tables<
     : never
 
 export type TablesInsert<
-  PublicTableNameOrOptions extends keyof PublicSchema['Tables'] | { schema: keyof Database },
+  PublicTableNameOrOptions extends
+    | keyof PublicSchema["Tables"]
+    | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
-    : never = never
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
         Insert: infer I
       }
       ? I
@@ -186,18 +228,20 @@ export type TablesInsert<
     : never
 
 export type TablesUpdate<
-  PublicTableNameOrOptions extends keyof PublicSchema['Tables'] | { schema: keyof Database },
+  PublicTableNameOrOptions extends
+    | keyof PublicSchema["Tables"]
+    | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
-    : never = never
+    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
         Update: infer U
       }
       ? U
@@ -205,27 +249,29 @@ export type TablesUpdate<
     : never
 
 export type Enums<
-  PublicEnumNameOrOptions extends keyof PublicSchema['Enums'] | { schema: keyof Database },
+  PublicEnumNameOrOptions extends
+    | keyof PublicSchema["Enums"]
+    | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
-    : never = never
+    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
-  : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
-    ? PublicSchema['Enums'][PublicEnumNameOrOptions]
+  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
+    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
     : never
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
-    | keyof PublicSchema['CompositeTypes']
+    | keyof PublicSchema["CompositeTypes"]
     | { schema: keyof Database },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
     schema: keyof Database
   }
-    ? keyof Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
-    : never = never
+    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
 > = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
-  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema['CompositeTypes']
-    ? PublicSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
+  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
+    ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never

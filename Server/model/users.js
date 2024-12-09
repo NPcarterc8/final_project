@@ -19,12 +19,28 @@ const conn = getConnection();
  */
 async function getAll() {
   const { data, error, count } = await conn
-    .from("users")
+    .from("user")
     .select("*", { count: "estimated" });
+  /** @type User[] */
+  const users = data.map((user) => ({
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    password: user.password,
+    role: user.role,
+    age: user.age,
+    firstName: user.first_name,
+    birthDate: user.birth_date,
+    lastName: user.last_name,
+    image: user.image,
+    university: user.university,
+    phone: user.phone,
+  }));
   return {
-    isSuccess: true,
-    data: data,
+    isSuccess: !error,
+    data: users,
     total: count,
+    message: error ? error.message : undefined,
   };
 }
 

@@ -20,6 +20,7 @@ export function update(user: User) {
 export function remove(id: number) {
   return api<DataEnvelope<User>>(`users/${id}`, undefined, 'DELETE')
 }
+
 export type User = {
   id?: number
   username: string
@@ -37,7 +38,7 @@ export type User = {
 
   image: string
 
-  address: {
+  address?: {
     address: string
 
     city: string
