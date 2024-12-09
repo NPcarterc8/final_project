@@ -8,7 +8,7 @@ const session = refSession()
 const users = ref<User[]>([])
 
 getAll().then((response) => {
-  users.value = response.data.slice(0, 5)
+  users.value = response.data
 })
 const { login, logout } = useLogin()
 const router = useRouter() // Initialize router
