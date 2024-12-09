@@ -4,6 +4,7 @@ import { getAll as getAllUsers, type User } from '@/models/user'
 import { getAll as getAllWorkouts, type Workout } from '@/models/workout'
 import { refSession } from '@/models/session'
 import WorkoutCard from '@/components/WorkoutCard.vue'
+//import WorkButton from '@/components/AddworkCard.vue'
 const workout = ref<Workout[]>([])
 const user = ref<User[]>([])
 const session = refSession()

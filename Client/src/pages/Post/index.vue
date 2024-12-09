@@ -4,8 +4,9 @@ import { getAll as getAllUsers, type User } from '@/models/user'
 import { getAll as getAllPosts, type Post } from '@/models/post'
 import { refSession } from '@/models/session'
 import PostComponent from '@/components/PostCard.vue'
+import PostButton from '@/components/AddpostCard.vue'
 const posts = ref<Post[]>([])
-const user = ref<User[]>([])
+const users = ref<User[]>([])
 const session = refSession()
 const isUser = computed(() => session.user?.role === 'user')
 const searchQuery = ref('')
@@ -15,18 +16,30 @@ getAllPosts().then((response) => {
 })
 
 getAllUsers().then((response) => {
-  user.value = response.data
+  users.value = response.data
 })
 </script>
 
 <template>
   <div class="shelf">
+    <PostButton
+      :post="{
+        id: 0,
+        content: '',
+        date: '',
+        time: '',
+        location: '',
+        workoutType: '',
+        userId: 0,
+        postType: ''
+      }"
+    />
     <PostComponent
       v-for="post in posts"
       :key="post.id"
       :post="post"
       :user="
-        user.find((u) => u.id === session.user?.id) ?? {
+        users.find((u) => u.id === post.userId) ?? {
           firstName: '',
           lastName: '',
           age: 0,

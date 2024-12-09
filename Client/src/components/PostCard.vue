@@ -27,7 +27,7 @@ const user = ref<{
 
 const fetchUserData = async (userId: number) => {
   const userModel = await getById(userId)
-  user.value = userModel.data
+  return (user.value = userModel.data)
 }
 
 onMounted(() => {
@@ -36,8 +36,17 @@ onMounted(() => {
   }
 })
 
-const postName = computed(() => {
-  return `${user.value?.firstName ?? ''} ${user.value?.lastName ?? ''}'s Post`
+const postId = ref<string>('Unknown name')
+
+const fetchPostId = async (id: number) => {
+  const userData = await fetchUserData(id)
+  postId.value = `${userData.firstName} ${userData.lastName}`
+}
+
+onMounted(() => {
+  if (props.post.id !== undefined) {
+    fetchPostId(props.post.id)
+  }
 })
 </script>
 
@@ -49,7 +58,7 @@ const postName = computed(() => {
       </div>
 
       <div class="post-content">
-        <p><strong>Post Name:</strong> {{ postName }}</p>
+        <p><strong>Post Name:</strong> {{ postId }}</p>
         <p><strong>Content:</strong> {{ post.content }}</p>
         <p><strong>Date:</strong> {{ post.date }}</p>
         <p><strong>Time:</strong> {{ post.time }}</p>

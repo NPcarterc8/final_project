@@ -5,97 +5,104 @@ import { ref, onMounted, computed } from 'vue'
 const props = defineProps<{
   workout: {
     id: number
+
     type: string
+
     duration: string
+
     date: string
+
     userId: number
   }
 }>()
 
 const user = ref<{
+  id?: number
   firstName: string
   lastName: string
   age: number
   university: string
   role: string
   image: string
-} | null>(null)
+}>()
 
 const fetchUserData = async (userId: number) => {
   const userModel = await getById(userId)
-  user.value = userModel.data
+  return (user.value = userModel.data)
 }
 
 onMounted(() => {
-  fetchUserData(props.workout.userId)
+  if (props.workout.userId) {
+    fetchUserData(props.workout.userId)
+  }
+})
+
+const postId = ref<string>('Unknown name')
+
+const fetchPostId = async (id: number) => {
+  const userData = await fetchUserData(id)
+  postId.value = `${userData.firstName} ${userData.lastName}`
+}
+
+onMounted(() => {
+  if (props.workout.id !== undefined) {
+    fetchPostId(props.workout.id)
+  }
 })
 </script>
 
 <template>
-  <div class="postcard" v-if="user">
-    <div class="postcard-header">
-      <img :src="user.image" :alt="user.firstName + ' ' + user.lastName" class="postcard-image" />
-      <div class="postcard-user-info">
-        <h2>{{ user.firstName }} {{ user.lastName }}</h2>
-        <p>{{ user.university }}</p>
+  <div class="post-card" v-if="user">
+    <div class="user-info">
+      <div class="box-image">
+        <img :src="user.image" :alt="user.firstName + ' ' + user.lastName" />
       </div>
-    </div>
-    <div class="postcard-content">
-      <p><strong>Workout Type:</strong> {{ workout.type }}</p>
-      <p><strong>Duration:</strong> {{ workout.duration }}</p>
-      <p><strong>Date:</strong> {{ workout.date }}</p>
+
+      <div class="post-content">
+        <p><strong>Post Name:</strong> {{ postId }}</p>
+        <p><strong>Content:</strong> {{ workout.type }}</p>
+        <p><strong>Date:</strong> {{ workout.date }}</p>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.postcard {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  max-width: 400px;
-  margin: 0 auto;
-  background-color: #fff;
+.post-card {
+  display: flex;
+  flex-direction: column;
 }
 
-.postcard-header {
+.user-info {
   display: flex;
   align-items: center;
-  padding: 1rem;
-  background-color: #f7f7f7;
-  border-bottom: 1px solid #ddd;
+  margin-bottom: 1rem;
 }
 
-.postcard-image {
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
+.box-image {
   margin-right: 1rem;
 }
 
-.postcard-user-info {
-  flex: 1;
+.box-content {
+  display: flex;
+  flex-direction: column;
 }
 
-.postcard-user-info h2 {
-  margin: 0;
-  font-size: 1.25rem;
+.box-content table {
+  border-collapse: collapse;
+  width: 100%;
 }
 
-.postcard-user-info p {
-  margin: 0;
-  color: #666;
+.box-content td {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
 }
 
-.postcard-content {
-  padding: 1rem;
+.box-content td strong {
+  font-weight: bold;
 }
 
-.postcard-content p {
-  margin: 0.5rem 0;
+.post-content {
+  margin-top: 1rem;
 }
 </style>
-<template></template>
-<template></template>
