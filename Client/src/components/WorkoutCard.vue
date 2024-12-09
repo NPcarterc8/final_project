@@ -1,95 +1,101 @@
 <script setup lang="ts">
-defineProps<{
+import { getAll, getById, type User } from '@/models/user'
+import { ref, onMounted, computed } from 'vue'
+
+const props = defineProps<{
   workout: {
     id: number
-
     type: string
-
     duration: string
-
     date: string
-
     userId: number
   }
-  user: {
-    firstName: string
-    lastName: string
-    age: number
-    university: string
-    role: string
-    image: string
-  }
 }>()
+
+const user = ref<{
+  firstName: string
+  lastName: string
+  age: number
+  university: string
+  role: string
+  image: string
+} | null>(null)
+
+const fetchUserData = async (userId: number) => {
+  const userModel = await getById(userId)
+  user.value = userModel.data
+}
+
+onMounted(() => {
+  fetchUserData(props.workout.userId)
+})
 </script>
 
 <template>
-  <div class="box-image">
-    <img :src="user.image" :alt="user.firstName + ' ' + user.lastName" />
-  </div>
-
-  <div class="box-content">
-    <table>
-      <tr>
-        <td><strong>Name:</strong></td>
-        <td>{{ user.firstName + ' ' + user.lastName }}</td>
-      </tr>
-      <tr>
-        <td><strong>Age:</strong></td>
-        <td>{{ user.age }}</td>
-      </tr>
-      <tr>
-        <td><strong>University:</strong></td>
-        <td>{{ user.university }}</td>
-      </tr>
-      <tr>
-        <td><strong>Role:</strong></td>
-        <td>{{ user.role }}</td>
-      </tr>
-    </table>
-    <p><strong>Workout Type:</strong> {{ workout.type }}</p>
-    <p><strong>duration:</strong> {{ workout.duration }}</p>
-    <p><strong>Date:</strong> {{ workout.date }}</p>
-    <p>{{ workout.type }}</p>
+  <div class="postcard" v-if="user">
+    <div class="postcard-header">
+      <img :src="user.image" :alt="user.firstName + ' ' + user.lastName" class="postcard-image" />
+      <div class="postcard-user-info">
+        <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+        <p>{{ user.university }}</p>
+      </div>
+    </div>
+    <div class="postcard-content">
+      <p><strong>Workout Type:</strong> {{ workout.type }}</p>
+      <p><strong>Duration:</strong> {{ workout.duration }}</p>
+      <p><strong>Date:</strong> {{ workout.date }}</p>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.box {
+.postcard {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #fff;
+}
+
+.postcard-header {
   display: flex;
   align-items: center;
-  margin-left: 2rem; /* Adjust the margin as needed to shift right */
+  padding: 1rem;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #ddd;
 }
 
-.box-image {
-  margin-right: 1rem; /* Adjust the margin as needed */
+.postcard-image {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  margin-right: 1rem;
 }
 
-.box-content {
-  display: flex;
-  flex-direction: column;
+.postcard-user-info {
+  flex: 1;
 }
 
-.box-content table {
-  border-collapse: collapse;
-  width: 100%;
+.postcard-user-info h2 {
+  margin: 0;
+  font-size: 1.25rem;
 }
 
-.box-content td {
-  padding: 0.5rem;
-  border: 1px solid #ddd;
+.postcard-user-info p {
+  margin: 0;
+  color: #666;
 }
 
-.box-content td strong {
-  font-weight: bold;
+.postcard-content {
+  padding: 1rem;
 }
 
-.role-dropdown {
-  margin-top: 1rem; /* Adjust the margin as needed */
-}
-
-.role-dropdown select {
-  padding: 0.25rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+.postcard-content p {
+  margin: 0.5rem 0;
 }
 </style>
+<template></template>
+<template></template>

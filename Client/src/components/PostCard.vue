@@ -1,5 +1,8 @@
 <script setup lang="ts">
-defineProps<{
+import { getAll, getById, type User } from '@/models/user'
+import { ref, onMounted, computed } from 'vue'
+
+const props = defineProps<{
   post: {
     id?: number
     content: string
@@ -10,58 +13,67 @@ defineProps<{
     userId: number
     postType?: string
   }
-  user: {
-    firstName: string
-    lastName: string
-    age: number
-    university: string
-    role: string
-    image: string
-  }
 }>()
+
+const user = ref<{
+  id?: number
+  firstName: string
+  lastName: string
+  age: number
+  university: string
+  role: string
+  image: string
+}>()
+
+const fetchUserData = async (userId: number) => {
+  const userModel = await getById(userId)
+  user.value = userModel.data
+}
+
+onMounted(() => {
+  if (props.post.userId) {
+    fetchUserData(props.post.userId)
+  }
+})
+
+const postName = computed(() => {
+  return `${user.value?.firstName ?? ''} ${user.value?.lastName ?? ''}'s Post`
+})
 </script>
 
 <template>
-  <div class="box-image">
-    <img :src="user.image" :alt="user.firstName + ' ' + user.lastName" />
-  </div>
+  <div class="post-card" v-if="user">
+    <div class="user-info">
+      <div class="box-image">
+        <img :src="user.image" :alt="user.firstName + ' ' + user.lastName" />
+      </div>
 
-  <div class="box-content">
-    <table>
-      <tr>
-        <td><strong>Name:</strong></td>
-        <td>{{ user.firstName + ' ' + user.lastName }}</td>
-      </tr>
-      <tr>
-        <td><strong>Age:</strong></td>
-        <td>{{ user.age }}</td>
-      </tr>
-      <tr>
-        <td><strong>University:</strong></td>
-        <td>{{ user.university }}</td>
-      </tr>
-      <tr>
-        <td><strong>Role:</strong></td>
-        <td>{{ user.role }}</td>
-      </tr>
-    </table>
-    <p><strong>Workout Type:</strong> {{ post.workoutType }}</p>
-    <p><strong>Location:</strong> {{ post.location }}</p>
-    <p><strong>Time:</strong> {{ post.time }}</p>
-    <p><strong>Date:</strong> {{ post.date }}</p>
-    <p>{{ post.content }}</p>
+      <div class="post-content">
+        <p><strong>Post Name:</strong> {{ postName }}</p>
+        <p><strong>Content:</strong> {{ post.content }}</p>
+        <p><strong>Date:</strong> {{ post.date }}</p>
+        <p><strong>Time:</strong> {{ post.time }}</p>
+        <p><strong>Location:</strong> {{ post.location }}</p>
+        <p><strong>Workout Type:</strong> {{ post.workoutType }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.box {
+.post-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info {
   display: flex;
   align-items: center;
-  margin-left: 2rem; /* Adjust the margin as needed to shift right */
+  margin-bottom: 1rem;
 }
 
 .box-image {
-  margin-right: 1rem; /* Adjust the margin as needed */
+  margin-right: 1rem;
 }
 
 .box-content {
@@ -83,13 +95,7 @@ defineProps<{
   font-weight: bold;
 }
 
-.role-dropdown {
-  margin-top: 1rem; /* Adjust the margin as needed */
-}
-
-.role-dropdown select {
-  padding: 0.25rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+.post-content {
+  margin-top: 1rem;
 }
 </style>
