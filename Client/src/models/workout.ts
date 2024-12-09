@@ -2,23 +2,23 @@ import type { DataEnvelope, DataListEnvelope } from './dataEnvelope'
 import { api } from './myFetch'
 
 export async function getAll() {
-  return api<DataListEnvelope<Workout>>('workouts')
+  return api<DataListEnvelope<Workout>>('workout')
 }
 
 export async function getById(id: number) {
-  return api<DataEnvelope<Workout>>(`workouts/${id}`)
+  return api<DataEnvelope<Workout>>(`workout/${id}`)
 }
 
 export function create(workout: Workout) {
-  return api<DataEnvelope<Workout>>('workouts', workout)
+  return api<DataEnvelope<Workout>>('workout', workout)
 }
 
 export function update(workout: Workout) {
-  return api<DataEnvelope<Workout>>(`workouts/${workout.id}`, workout, 'PATCH')
+  return api<DataEnvelope<Workout>>(`workout/${workout.id}`, workout, 'PATCH')
 }
 
 export function remove(id: number) {
-  return api<DataEnvelope<Workout>>(`workouts/${id}`, undefined, 'DELETE')
+  return api<DataEnvelope<Workout>>(`workout/${id}`, undefined, 'DELETE')
 }
 
 export interface Workout {
@@ -29,5 +29,6 @@ export interface Workout {
   duration: string
 
   date: string
+
   userId: number
 }

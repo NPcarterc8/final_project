@@ -4,7 +4,6 @@ import { getAll as getAllUsers, type User } from '@/models/user'
 import { getAll as getAllPosts, type Post } from '@/models/post'
 import { refSession } from '@/models/session'
 import PostComponent from '@/components/PostCard.vue'
-//import { post } from 'node_modules/axios/index.cjs'
 const posts = ref<Post[]>([])
 const user = ref<User[]>([])
 const session = refSession()
