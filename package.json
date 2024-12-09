@@ -4,8 +4,10 @@
     "dev": "nodemon Server/index.js --watch server"
   },
   "dependencies": {
-    "express": "^4.21.0",
-    "dayjs": "^1.11.13"
+    "@supabase/supabase-js": "^2.47.2",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"

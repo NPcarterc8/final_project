@@ -1,5 +1,7 @@
 /** @type {{ items: Post[] }} */
 const data = require("../data/post.json");
+const { getConnection } = require("./supabase.js");
+const conn = getConnection();
 
 /**
  * @template T
@@ -16,10 +18,13 @@ const data = require("../data/post.json");
  * @returns {Promise<DataListEnvelope<Post>>}
  */
 async function getAll() {
+  const { data, error, count } = await conn
+    .from("products")
+    .select("*", { count: "estimated" });
   return {
     isSuccess: true,
-    data: data.items,
-    total: data.items.length,
+    data: data,
+    total: count,
   };
 }
 
@@ -49,6 +54,11 @@ async function add(user) {
     data: user,
   };
 }
+async function seed() {
+  for (const post of data.items) {
+    await add(post);
+  }
+}
 
 /**
  * Update a user
@@ -57,11 +67,11 @@ async function add(user) {
  * @returns {Promise<DataEnvelope<Post>>}
  */
 async function update(id, user) {
-  const userToUpdate = get(id);
-  Object.assign(userToUpdate, user);
+  const userToUpdate = await get(id);
+  Object.assign(userToUpdate.data, user);
   return {
     isSuccess: true,
-    data: userToUpdate,
+    data: userToUpdate.data,
   };
 }
 
@@ -73,12 +83,7 @@ async function update(id, user) {
 async function remove(id) {
   const itemIndex = data.items.findIndex((user) => user.id == id);
   if (itemIndex === -1)
-    throw {
-      isSuccess: false,
-      message: "Item not found",
-      data: id,
-      status: 404,
-    };
+    throw { isSuccess: false, message: "Item not found", data: id };
   data.items.splice(itemIndex, 1);
   return { isSuccess: true, message: "Item deleted", data: id };
 }
@@ -89,4 +94,5 @@ module.exports = {
   add,
   update,
   remove,
+  seed,
 };

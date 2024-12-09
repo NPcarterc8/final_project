@@ -2,6 +2,13 @@ const model = require("../model/workout");
 const express = require("express");
 const app = express.Router();
 
+/* Four ways to send data to the server:
+ * 1. Query String
+ * 2. URL Parameters
+ * 3. Headers
+ * 4. Body
+ */
+
 app
   .get("/", (req, res, next) => {
     model
@@ -31,8 +38,15 @@ app
   })
   .delete("/:id", (req, res, next) => {
     const id = req.params.id;
+
     model
       .remove(+id)
+      .then((x) => res.send(x))
+      .catch(next);
+  })
+  .post("/seed", (req, res, next) => {
+    model
+      .seed()
       .then((x) => res.send(x))
       .catch(next);
   });
