@@ -1,9 +1,4 @@
 <script setup lang="ts">
-import { refSession } from '@/models/session'
-import { computed, ref } from 'vue'
-
-const session = refSession()
-
 defineProps<{
   post: {
     id?: number
@@ -28,22 +23,34 @@ defineProps<{
 
 <template>
   <div class="box-image">
-    <img :src="user.image" alt="user.firstName + ' ' + user.lastName" />
+    <img :src="user.image" :alt="user.firstName + ' ' + user.lastName" />
   </div>
-  <tbody>
-    <tr>
-      <td><strong>Name:</strong></td>
-      <td>{{ user.firstName + ' ' + user.lastName }}</td>
-    </tr>
-    <tr>
-      <td><strong>Age:</strong></td>
-      <td>{{ post.time }}</td>
-    </tr>
-    <tr>
-      <td><strong>University:</strong></td>
-      <td>{{ post.workoutType }}</td>
-    </tr>
-  </tbody>
+
+  <div class="box-content">
+    <table>
+      <tr>
+        <td><strong>Name:</strong></td>
+        <td>{{ user.firstName + ' ' + user.lastName }}</td>
+      </tr>
+      <tr>
+        <td><strong>Age:</strong></td>
+        <td>{{ user.age }}</td>
+      </tr>
+      <tr>
+        <td><strong>University:</strong></td>
+        <td>{{ user.university }}</td>
+      </tr>
+      <tr>
+        <td><strong>Role:</strong></td>
+        <td>{{ user.role }}</td>
+      </tr>
+    </table>
+    <p><strong>Workout Type:</strong> {{ post.workoutType }}</p>
+    <p><strong>Location:</strong> {{ post.location }}</p>
+    <p><strong>Time:</strong> {{ post.time }}</p>
+    <p><strong>Date:</strong> {{ post.date }}</p>
+    <p>{{ post.content }}</p>
+  </div>
 </template>
 
 <style scoped>
