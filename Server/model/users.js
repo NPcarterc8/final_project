@@ -19,7 +19,7 @@ const conn = getConnection();
  */
 async function getAll() {
   const { data, error, count } = await conn
-    .from("products")
+    .from("users")
     .select("*", { count: "estimated" });
   return {
     isSuccess: true,

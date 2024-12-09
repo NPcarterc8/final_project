@@ -28,50 +28,6 @@ export type Database = {
   }
   public: {
     Tables: {
-      reviews: {
-        Row: {
-          comment: string
-          createdAt: string | null
-          date: string
-          id: number
-          productId: number
-          rating: number
-          reviewerEmail: string
-          reviewerName: string
-          updatedAt: string | null
-        }
-        Insert: {
-          comment: string
-          createdAt?: string | null
-          date: string
-          id?: number
-          productId: number
-          rating: number
-          reviewerEmail: string
-          reviewerName: string
-          updatedAt?: string | null
-        }
-        Update: {
-          comment?: string
-          createdAt?: string | null
-          date?: string
-          id?: number
-          productId?: number
-          rating?: number
-          reviewerEmail?: string
-          reviewerName?: string
-          updatedAt?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: 'reviews_productId_fkey'
-            columns: ['productId']
-            isOneToOne: false
-            referencedRelation: 'products'
-            referencedColumns: ['id']
-          }
-        ]
-      }
       post: {
         Row: {
           id: number

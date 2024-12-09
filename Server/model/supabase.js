@@ -1,4 +1,6 @@
-require("dotenv").config();
+require("dotenv").config({
+  path: "C:\\Users\\maswe\\OneDrive\\Desktop\\final_project\\Server\\.env",
+});
 const { createClient } = require("@supabase/supabase-js");
 
 /** 
