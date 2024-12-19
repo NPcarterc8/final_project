@@ -28,3 +28,5 @@ Content-Type: application/json
     "email": "goldberg@newpaltz.edu",
     "password": "123456"
 }
+###
+POST http://localhost:3000/api/v1/search?q=corey
