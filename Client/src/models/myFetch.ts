@@ -1,7 +1,5 @@
 const API_URL = 'http://localhost:3000/api/v1/'
 
-import { createClient } from '@supabase/supabase-js'
-
 export function rest<T>(url: string, data?: any, method?: string): Promise<T> {
   return fetch(url, {
     method: method ?? (data ? 'POST' : 'GET'),

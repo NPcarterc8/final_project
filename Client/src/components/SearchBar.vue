@@ -1,6 +1,14 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { getAll, update, type User } from '@/models/user'
+//import AutoComplete from './AutoComplete.vue'
+const debounce = (func: Function, wait: number) => {
+  let timeout: ReturnType<typeof setTimeout>
+  return (...args: any[]) => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => func.apply(this, args), wait)
+  }
+}
 
 const props = defineProps<{
   searchQuery: string
@@ -9,31 +17,34 @@ const props = defineProps<{
 const emit = defineEmits(['update:searchQuery'])
 
 const results = ref<User[]>([])
+const allUsers = ref<User[]>([])
 
 function updateQuery(event: Event) {
   const query = (event.target as HTMLInputElement).value
   emit('update:searchQuery', query)
-  fetchResults(query)
 }
 
-async function fetchResults(query: string) {
+const fetchResults = debounce((query: string) => {
   if (query.length > 0) {
-    try {
-      const response = await getAll()
-      const users: User[] = response.data
-      const lowerCaseQuery = query.toLowerCase()
-      results.value = users.filter(
-        (user) =>
-          user.username.toLowerCase().includes(lowerCaseQuery) ||
-          user.firstName.toLowerCase().includes(lowerCaseQuery) ||
-          user.lastName.toLowerCase().includes(lowerCaseQuery) ||
-          user.email.toLowerCase().includes(lowerCaseQuery)
-      )
-    } catch (error) {
-      console.error('Error fetching search results:', error)
-    }
+    const lowerCaseQuery = query.toLowerCase()
+    results.value = allUsers.value.filter(
+      (user) =>
+        user.username.toLowerCase().includes(lowerCaseQuery) ||
+        user.firstName.toLowerCase().includes(lowerCaseQuery) ||
+        user.lastName.toLowerCase().includes(lowerCaseQuery) ||
+        user.email.toLowerCase().includes(lowerCaseQuery)
+    )
   } else {
     results.value = []
+  }
+}, 300)
+
+async function fetchAllUsers() {
+  try {
+    const response = await getAll()
+    allUsers.value = response.data
+  } catch (error) {
+    console.error('Error fetching users:', error)
   }
 }
 
@@ -52,6 +63,8 @@ watch(
     fetchResults(newQuery)
   }
 )
+
+fetchAllUsers()
 </script>
 
 <template>
@@ -67,14 +80,15 @@ watch(
       <ul>
         <li v-for="user in results" :key="user.id">
           <img :src="user.image" alt="User Avatar" />
-          {{ user.username }}
-          <span style="flex-grow: 1; margin-left: 8px">{{ user.username }}</span>
+          {{ user.firstName }} {{ user.lastName }}
+          <span style="flex-grow: 1; margin-left: 8px"></span>
           <button @click="handleAddFriend(user)" class="add-friend-button" style="color: red">
             Add Friend
           </button>
         </li>
       </ul>
     </div>
+    <div v-else class="no-results">No results found.</div>
   </div>
 </template>
 
@@ -110,5 +124,11 @@ watch(
   height: 50px;
   border-radius: 50%;
   margin-right: 8px;
+}
+
+.no-results {
+  margin-top: 8px;
+  color: #888;
+  text-align: center;
 }
 </style>

@@ -21,6 +21,9 @@ importers:
         specifier: ^4.21.0
         version: 4.21.1
     devDependencies:
+      '@types/lodash':
+        specifier: ^4.17.13
+        version: 4.17.13
       nodemon:
         specifier: ^3.1.7
         version: 3.1.7
@@ -48,6 +51,9 @@ packages:
 
   '@supabase/supabase-js@2.47.2':
     resolution: {integrity: sha512-BdP5hY29eCROJRV61WCM+OzcTSjaSzZe0H+2l88tOwmTG+1XqCiVYtZnUNIh12V8g5gdmQL5urp1pSYARbl38A==}
+
+  '@types/lodash@4.17.13':
+    resolution: {integrity: sha512-lfx+dftrEZcdBPczf9d0Qv0x+j/rfNCMuC6OcfXmO8gkfeNAY88PgKUbvG56whcN23gc27yenwF6oJZXGFpYxg==}
 
   '@types/node@22.10.1':
     resolution: {integrity: sha512-qKgsUwfHZV2WCWLAnVP1JqnpE6Im6h3Y0+fYgMTasNQ7V++CBX5OT1as0g0f+OyubbFqhf6XVNIsmN4IIhEgGQ==}
@@ -500,6 +506,8 @@ snapshots:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
+
+  '@types/lodash@4.17.13': {}
 
   '@types/node@22.10.1':
     dependencies:
